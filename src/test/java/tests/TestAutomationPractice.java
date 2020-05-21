@@ -9,13 +9,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import main.java.actions.InteracoesWeb;
-import main.java.actions.ValidacaoAction;
 import main.java.pages.CreateAccountPage;
+import main.java.pages.LoginPage;
+import main.java.pages.SearchPage;
+import main.java.pages.SucessPage;
 import main.java.utils.Constants;
 import main.java.utils.DriverContext;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestAutomationPractice implements ValidacaoAction {
+public class TestAutomationPractice {
 	static WebDriver driver;
 	InteracoesWeb i = new InteracoesWeb();
 	
@@ -35,11 +37,10 @@ public class TestAutomationPractice implements ValidacaoAction {
 		DriverContext.getDriver().get("http://automationpractice.com/");
 	}
 	
-	
-	@Test
+
 	public void testCriarContaUsuario()  {
 		i.clicar(CreateAccountPage.linkSignIn);
-		i.escrever(CreateAccountPage.txtEmail, "rayanneblima7@gmail.com");
+		i.escrever(CreateAccountPage.txtEmail, "rayanneblima13@gmail.com");
 		i.clicar(CreateAccountPage.btnCreateAccount);
 		i.clicar(CreateAccountPage.rdbSexoFeminino);
 		i.escrever(CreateAccountPage.txtFirstName, "Rayanne");
@@ -64,8 +65,39 @@ public class TestAutomationPractice implements ValidacaoAction {
 		i.escrever(CreateAccountPage.txtAdressName, "Casa 1");
 		
 		i.clicar(CreateAccountPage.btnRegister);
+		i.validarCadastro(SucessPage.linkUsername, "Rayanne Lima");
 		
-		validar(CreateAccountPage.linkUsername, "Rayanne Lima");
+		//DESLOGA
+		i.clicar(CreateAccountPage.linkSignOut);
+		
+	}
+
+	
+	@Test
+	public void testRealizarCompra()  {
+		i.clicar(LoginPage.linkSignIn);
+		i.escrever(LoginPage.txtEmail, "rayanneblima8@gmail.com");
+		i.escrever(LoginPage.txtPassword, "12345");
+		i.clicar(LoginPage.btnSubmit);
+		
+		i.escrever(SearchPage.txtSearch, "dresses");
+		i.confirmar(SearchPage.txtSearch);
+		i.clicarLista(SearchPage.itensLista, "Printed Chiffon Dress");
+		
+		i.clicar(SearchPage.btnQtd);
+		i.selecionar(SearchPage.cbSize, "2");
+		i.clicar(SearchPage.btnAddCart);
+	
+		i.clicar(SearchPage.btnProceedCheckout);
+		i.clicar(SearchPage.btnSumaryProceedCheckout);
+		i.clicar(SearchPage.btnAdressProceedCheckout);
+		i.clicar(SearchPage.ckTermos);
+		i.clicar(SearchPage.btnShippingProceedCheckout);
+		i.clicar(SearchPage.btnPayByBank);
+		i.clicar(SearchPage.btnConfirm);
+		
+		i.validarCompra(SucessPage.linkSucessSale, "Your order on My Store is complete.");
+		
 	}
 	
 

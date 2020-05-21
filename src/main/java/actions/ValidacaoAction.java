@@ -7,9 +7,16 @@ import main.java.utils.DriverContext;
 
 public interface ValidacaoAction {
 	
-	default void validar(By elemento, String texto) {
+	default void validarCadastro(By elemento, String texto) {
+		UtilActions.esperarElementoExistir(elemento);
 		Assert.assertTrue(DriverContext.getDriver().findElement(elemento).getText().equals(texto));
-		//System.out.println("Validouuuuu!");
+		//System.out.println("Validouuuuu (cadastro)!");
 	}
 
+	
+	default void validarCompra(By elemento, String texto) {
+		UtilActions.esperarElementoExistir(elemento);
+		Assert.assertTrue(DriverContext.getDriver().findElement(elemento).getText().equals(texto));
+		//System.out.println("Validouuuuu (compra)!");
+	}
 }
